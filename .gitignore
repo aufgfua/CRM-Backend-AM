@@ -1,5 +1,10 @@
 ### gitignore configured to avoid sending IDE files to VCS
 
+
+# Remove local variables such as DB access
+application-local.properties
+
+
 ### Java ###
 # Compiled class file
 *.class
