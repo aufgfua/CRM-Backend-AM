@@ -18,15 +18,15 @@ public class AppUserController {
 
     // Autowired - Config -> nullableModelMapper()
     @Qualifier("nullableModelMapper")
-    private final ModelMapper nullableModelMapper; // configured to skip null fields
+    private final ModelMapper nullableModelMapper; // configured to skip null fields (used for DTO -> AppUser mapping)
 
     // Autowired - Config -> modelMapper()
     @Qualifier("modelMapper")
-    private final ModelMapper modelMapper; // configured to convert all fields
+    private final ModelMapper modelMapper; // configured to try to convert all fields (used for DTO -> AppUser mapping)
 
 
     // Autowired - AppUserService.class
-    private final AppUserService appUserService; // Passed to the constructor with Dependency Injection
+    private final AppUserService appUserService; // Handles CRUD business logic
 
 
 

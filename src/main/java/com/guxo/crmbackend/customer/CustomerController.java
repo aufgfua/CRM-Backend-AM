@@ -16,6 +16,8 @@ import java.util.Objects;
 @RequestMapping(path = "/customer")
 public class CustomerController {
 
+    // TODO Search and ask for tips on how to refactor the DTO -> model mapping better (less coupled but Spring based)
+
     // Autowired - Config -> nullableModelMapper()
     @Qualifier("nullableModelMapper")
     private final ModelMapper nullableModelMapper; // configured to skip null fields

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,24 +21,13 @@ public class AppUserService implements UserDetailsService {
 
     // Autowired - Config -> nullableModelMapper()
     @Qualifier("nullableModelMapper")
-    private final ModelMapper nullableModelMapper;
+    private final ModelMapper nullableModelMapper; // skips null fields (used for update method)
 
     // Autowired - AppUserRepository
     private final AppUserRepository appUserRepository;
 
+    private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<AppUser> appUserSearch = appUserRepository.findByUsername(username);
-        if(appUserSearch.isEmpty()) {
-            throw new UsernameNotFoundException("Username not found");
-        }
-        AppUser appUser = appUserSearch.get();
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(appUser.getRole().name()));
-        User springSecurityUser = new User(appUser.getUsername(), appUser.getPassword(), authorities);
-        return springSecurityUser;
-    }
 
     // getAppUsers :    -> List<AppUser>
     // returns List of all appUsers
@@ -67,6 +57,7 @@ public class AppUserService implements UserDetailsService {
         if(appUserExists) { // check if appUser ID was already used
             throw new IllegalStateException("AppUser ID already created");
         }
+        appUser.setPassword(passwordEncoder.encode(appUser.getPassword())); // encode user password
         appUserRepository.save(appUser); // create appUser
         return appUser; // Return AppUser to the client (possibly different from given DTO)
     }
@@ -99,5 +90,21 @@ public class AppUserService implements UserDetailsService {
 
     }
 
+
+
+    // used for WebSecurityConfig - config
+    // receives String for username and returns a new SpringSecurity User -> (username, password, roles).
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<AppUser> appUserSearch = appUserRepository.findByUsername(username); // finds AppUser by username
+        if(appUserSearch.isEmpty()) {
+            throw new UsernameNotFoundException("Username not found");
+        }
+        AppUser appUser = appUserSearch.get(); // retrieves AppUser from Optional<AppUser>
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(appUser.getRole().name())); // create SimpleGrantedAuthority from AppUser.Role
+        User springSecurityUser = new User(appUser.getUsername(), appUser.getPassword(), authorities); // create SpringSecurity User (username, password, authorities)
+        return springSecurityUser;
+    }
 
 }
