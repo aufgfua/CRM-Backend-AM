@@ -5,6 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class CrmBackendApplication {
@@ -13,8 +15,10 @@ public class CrmBackendApplication {
 		SpringApplication.run(CrmBackendApplication.class, args);
 	}
 
-
-
+	@Bean
+	public PasswordEncoder passwordEncoder(){
+		return new BCryptPasswordEncoder();
+	}
 
 	// Model Mapper that skips setting null values
 	@Bean(name="nullableModelMapper")

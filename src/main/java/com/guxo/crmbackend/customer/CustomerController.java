@@ -1,6 +1,7 @@
 package com.guxo.crmbackend.customer;
 
 
+import com.guxo.crmbackend.exceptions.CustomerNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,6 +36,37 @@ public class CustomerController {
     public List<Customer> getCustomers(){
         return customerService.getCustomers();
     }
+
+
+
+    // GET /api/customer/{id}
+    // Get customer by id
+    @GetMapping(path = "{customerId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Customer getCustomer(@PathVariable Long customerId) {
+        Customer customer = customerService.getCustomer(customerId);
+        if(customer == null){
+            throw new CustomerNotFoundException();
+        }
+        return customer;
+    }
+
+
+
+
+
+    // GET /api/customer/{id}
+    // Get customer by id
+    @GetMapping(path = "getByEmail/{customerEmail}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Customer getCustomerByEmail(@PathVariable String customerEmail) {
+        Customer customer = customerService.getCustomerByEmail(customerEmail);
+        if(customer == null){
+            throw new CustomerNotFoundException();
+        }
+        return customer;
+    }
+
 
 
 

@@ -29,10 +29,21 @@ public class CustomerService {
 
 
 
-    // getCustomers :  Long  -> Customer
+    // getCustomer :  Long  -> Customer
     // returns customer by ID
     public Customer getCustomer(Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId); // gets customer from id
+        if (customer.isEmpty()) {
+            return null;
+        }
+        return customer.get(); // return wanted customer
+    }
+
+
+    // getCustomerByEmail :  String  -> Customer
+    // returns customer by Email
+    public Customer getCustomerByEmail(String customerEmail) {
+        Optional<Customer> customer = customerRepository.findByEmail(customerEmail); // gets customer from id
         if (customer.isEmpty()) {
             return null;
         }
