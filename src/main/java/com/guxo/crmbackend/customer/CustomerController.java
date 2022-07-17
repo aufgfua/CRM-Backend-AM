@@ -55,7 +55,7 @@ public class CustomerController {
 
 
 
-    // GET /api/customer/{id}
+    // GET /api/customer/getByEmail/{customerEmail}
     // Get customer by id
     @GetMapping(path = "getByEmail/{customerEmail}")
     @ResponseStatus(HttpStatus.ACCEPTED)
