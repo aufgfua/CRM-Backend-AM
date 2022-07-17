@@ -1,4 +1,4 @@
-package com.guxo.crm_backend;
+package com.guxo.crmbackend;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;

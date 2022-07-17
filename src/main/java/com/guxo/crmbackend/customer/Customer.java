@@ -1,10 +1,9 @@
-package com.guxo.crm_backend.customer;
+package com.guxo.crmbackend.customer;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

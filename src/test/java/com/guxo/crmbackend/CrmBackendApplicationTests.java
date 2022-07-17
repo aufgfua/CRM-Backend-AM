@@ -1,4 +1,4 @@
-package com.guxo.crm_backend;
+package com.guxo.crmbackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

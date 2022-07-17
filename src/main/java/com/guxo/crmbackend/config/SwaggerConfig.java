@@ -1,4 +1,4 @@
-package com.guxo.crm_backend.config;
+package com.guxo.crmbackend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

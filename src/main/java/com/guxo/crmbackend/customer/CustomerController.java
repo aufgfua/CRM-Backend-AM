@@ -1,4 +1,4 @@
-package com.guxo.crm_backend.customer;
+package com.guxo.crmbackend.customer;
 
 
 import lombok.AllArgsConstructor;

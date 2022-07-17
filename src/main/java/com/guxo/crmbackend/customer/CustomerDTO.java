@@ -1,6 +1,5 @@
-package com.guxo.crm_backend.customer;
+package com.guxo.crmbackend.customer;
 
-import com.sun.istack.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
