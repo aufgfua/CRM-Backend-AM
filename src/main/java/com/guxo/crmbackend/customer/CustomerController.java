@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/customer")
+@RequestMapping(path = "/api/customer")
 public class CustomerController {
 
     // TODO Search and ask for tips on how to refactor the DTO -> model mapping better (less coupled but Spring based)

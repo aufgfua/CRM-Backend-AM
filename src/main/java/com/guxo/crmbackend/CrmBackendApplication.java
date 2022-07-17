@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootApplication
 public class CrmBackendApplication {
 
@@ -44,6 +47,16 @@ public class CrmBackendApplication {
 	}
 
 
+
+	@Bean("permissionPaths")
+	Map<String, String[]> getPermissionPaths(){
+		Map<String, String[]> permissionPaths = new HashMap<>();
+
+		permissionPaths.put("/api/customer/**", new String[]{ AppUserRole.USER.name(), AppUserRole.ADMIN.name() });
+		permissionPaths.put("/api/user/**", new String[]{ AppUserRole.ADMIN.name() });
+
+		return permissionPaths;
+	}
 
 
 	@Bean

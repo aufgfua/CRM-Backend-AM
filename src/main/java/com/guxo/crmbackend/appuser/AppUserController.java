@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/api/user")
 public class AppUserController {
 
     // Autowired - Config -> nullableModelMapper()
