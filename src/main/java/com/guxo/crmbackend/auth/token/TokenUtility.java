@@ -72,6 +72,21 @@ public class TokenUtility {
     }
 
 
+    public static boolean isRefreshToken(String token, String jwtSecret){
+        if(jwtSecret.isEmpty()){
+            return false; // leave if jwt is empty
+        }
+
+        String[] roles = decodeJWT(token, jwtSecret).getClaim("roles").asArray(String.class); // get username
+
+        if(roles == null) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 
     // Decode JWT for internal use (avoid writing decode code multiple times)
     private static DecodedJWT decodeJWT(String token, String jwtSecret) {

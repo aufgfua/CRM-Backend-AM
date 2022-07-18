@@ -63,6 +63,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable(); // disable cross site requests (?)
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+
+        // XSS protection - Baeldung https://www.baeldung.com/spring-prevent-xss
+        http    .headers()
+                .xssProtection()
+                .and()
+                .contentSecurityPolicy("script-src 'self'");
+
+
         String filesRootAntMatcher = "/" + filesRoot + "/**";
 
         http.authorizeRequests().antMatchers("/login/**").permitAll();

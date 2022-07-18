@@ -63,6 +63,12 @@ public class TokenService implements UserDetailsService {
 
         String username = TokenUtility.getUsernameFromToken(refreshToken, jwtSecret); // get from utility
 
+        boolean isRefreshToken = TokenUtility.isRefreshToken(refreshToken, jwtSecret);
+
+        if(!isRefreshToken) {
+            throw new IllegalStateException("Given token is not a refresh token");
+        }
+
         Date refreshTokenExpiration = new Date(
                 System.currentTimeMillis()
                         + TimeUnit.DAYS.toMillis(WebSecurityConfig.REFRESH_TOKEN_DURATION)); // Current Time + ACCESS_TOKEN_DURATION (10 minutes) = 10 minutes from login
