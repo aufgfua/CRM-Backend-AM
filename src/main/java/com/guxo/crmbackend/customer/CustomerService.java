@@ -3,11 +3,15 @@ package com.guxo.crmbackend.customer;
 
 import com.guxo.crmbackend.appuser.AppUserRepository;
 import com.guxo.crmbackend.appuser.AppUserService;
+import com.guxo.crmbackend.files.Image;
+import com.guxo.crmbackend.files.ImageService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.channels.MulticastChannel;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +28,9 @@ public class CustomerService {
 
     // Autowired
     private final AppUserService appUserService;
+
+    // Autowired
+    private final ImageService imageService;
 
 
     // getCustomers :    -> List<Customer>
@@ -57,16 +64,6 @@ public class CustomerService {
 
 
 
-
-    // addNewCustomer : Customer -> Customer
-    // Creates customer in DB and then returns the customer
-    public Customer addNewCustomer(Customer customer){
-        return addNewCustomer(customer, "admin"); // Return Customer to the client (possibly different from given DTO)
-    }
-
-
-
-
     // addNewCustomer : Customer -> Customer
     // Creates customer in DB and then returns the customer
     public Customer addNewCustomer(Customer customer, String appUserUsername){
@@ -76,12 +73,28 @@ public class CustomerService {
             throw new IllegalStateException("Customer ID already created");
         }
 
-
         customer.setCreationAppUser(appUserService.getAppUserByUsername(appUserUsername));
-
 
         customerRepository.save(customer); // create customer
         return customer; // Return Customer to the client (possibly different from given DTO)
+    }
+
+
+    public String uploadNewPhoto(Long customerId, MultipartFile photoFile, String appUserUsername){
+        Customer customer = getCustomer(customerId);
+
+        if(customer == null) {
+            throw new IllegalStateException("Customer ID does not exist");
+        }
+
+        Image image = imageService.savePhoto(photoFile, customer);
+
+        customer.setPhoto(image);
+        customer.setLastUpdateAppUser(appUserService.getAppUserByUsername(appUserUsername)); // changing image counts as update
+
+        customerRepository.save(customer);
+
+        return image.getUrl();
     }
 
 
@@ -98,17 +111,13 @@ public class CustomerService {
 
 
 
-    public void updateCustomer(Long customerId, Customer newCustomerValues){
-        updateCustomer(customerId, newCustomerValues, "admin");
-    }
-
     public void updateCustomer(Long customerId, Customer newCustomerValues, String appUserUsername){
-        Optional<Customer> existingCustomer = customerRepository.findById(customerId);
-        if(existingCustomer.isEmpty()) { // check if there is a customer with the given ID
+
+        Customer customer = getCustomer(customerId);
+
+        if(customer == null) {
             throw new IllegalStateException("Customer ID does not exist");
         }
-
-        Customer customer = existingCustomer.get(); // gets customer from Optional
 
         nullableModelMapper.map(newCustomerValues, customer); // map not-null values from newCustomerValues to the customer object
 

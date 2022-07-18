@@ -13,12 +13,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info =@Info(
-                title = "CRM Backend API - A.M.",
-                version = "${api.version}",
+                title = "${config.api-title}",
+                version = "${config.api-version}",
                 contact = @Contact(
                         name = "Augusto Flach", email = "augustofalcaoflach@gmail.com", url = "https://guxo.com.br/"
                 ),
-                description = "A simple CRM Backend API. Authentication through /login"
+                description = "${config.api-description}"
         )
 )
 public class OpenAPISecurityConfiguration {

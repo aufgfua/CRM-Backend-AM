@@ -100,12 +100,11 @@ public class AppUserService{
 
 
     public void updateAppUser(Long appUserId, AppUser newAppUserValues){
-        Optional<AppUser> existingAppUser = appUserRepository.findById(appUserId);
-        if(existingAppUser.isEmpty()) { // check if there is a appUser with the given ID
-            throw new IllegalStateException("AppUser ID does not exist");
-        }
+        AppUser appUser = getAppUser(appUserId);
 
-        AppUser appUser = existingAppUser.get(); // gets appUser from Optional
+        if(appUser == null) {
+            throw new IllegalStateException("User ID does not exist");
+        }
 
         nullableModelMapper.map(newAppUserValues, appUser); // map not-null values from newAppUserValues to the appUser object
 

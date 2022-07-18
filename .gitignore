@@ -1,5 +1,7 @@
 ### gitignore configured to avoid sending IDE files to VCS
 
+/files/*
+
 
 # Remove local variables such as DB access
 application-local.properties

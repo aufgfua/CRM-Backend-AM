@@ -2,6 +2,7 @@ package com.guxo.crmbackend.customer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.guxo.crmbackend.appuser.AppUser;
+import com.guxo.crmbackend.files.Image;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,15 +42,27 @@ public class Customer {
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.DETACH)
+    private Image photo;
+
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.DETACH)
     private AppUser creationAppUser;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.DETACH)
     private AppUser lastUpdateAppUser;
 
+
+    public String getPhotoUrl(){
+        if(photo == null){
+            return null;
+        }
+        return photo.getUrl();
+    }
+
     public String getCreationUser() {
         if(creationAppUser == null) {
-            return "empty";
+            return null;
         }
         return creationAppUser.getUsername();
     }
@@ -57,7 +70,7 @@ public class Customer {
 
     public String getLastUpdateUser() {
         if(lastUpdateAppUser == null) {
-            return "empty";
+            return null;
         }
         return lastUpdateAppUser.getUsername();
     }

@@ -23,11 +23,11 @@ public class CrmBackendApplication {
 		SpringApplication.run(CrmBackendApplication.class, args);
 	}
 
-	@Value("${baseadminpassword}")
+	@Value("${base-admin-password}")
 	private String baseAdminPassword;
 
 
-	@Value("${jwtencryption.secret}")
+	@Value("${jwt-encryption-secret}")
 	private String jwtSecret;
 
 

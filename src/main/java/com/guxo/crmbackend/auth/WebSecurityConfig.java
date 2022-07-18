@@ -5,6 +5,7 @@ import com.guxo.crmbackend.auth.filter.CustomAuthenticationFilter;
 import com.guxo.crmbackend.auth.filter.CustomAuthorizationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("jwtSecret")
     private final String jwtSecret;
 
-
+    @Value("${files.root}")
+    private String filesRoot;
 
 
     public static final Integer ACCESS_TOKEN_DURATION = 50; // minutes
@@ -61,7 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable(); // disable cross site requests (?)
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        String filesRootAntMatcher = filesRoot.concat("/**");
+
         http.authorizeRequests().antMatchers("/login/**").permitAll();
+        http.authorizeRequests().antMatchers(filesRootAntMatcher).permitAll();
         http.authorizeRequests().antMatchers("/swagger-ui.html").permitAll();
         http.authorizeRequests().antMatchers("/swagger-ui/**").permitAll();
         http.authorizeRequests().antMatchers("/api-docs/**").permitAll();

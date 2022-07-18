@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -85,6 +86,15 @@ public class CustomerController {
 
         return customerService.addNewCustomer(customer, currentAppUserUsername);
     }
+
+
+    // POST /api/customer/{customerId}/photo
+    // uploads new photo to customer
+    @PostMapping(path = "{customerId}/photo")
+    public String uploadNewPhoto(@PathVariable Long customerId, @RequestParam MultipartFile photo){
+        return customerService.uploadNewPhoto(customerId, photo, getCurrentAppUserUsername()); // passes customerId, photo file and current user (for lastUpdateUser)
+    }
+
 
 
 
