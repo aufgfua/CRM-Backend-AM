@@ -14,26 +14,32 @@ import java.nio.file.Paths;
 @Service
 public class FilesService {
 
-    @Value("${files.root}")
-    private String filesRoot;
+    @Value("${files.public}")
+    private String publicFiles;
+    @Value("${files.user-uploaded}")
+    private String userUploaded;
 
 
     // saves file and returns absolute url
-    public String saveFile(MultipartFile file, String name, String directory){
+    public String saveFile(MultipartFile file, String fileName, String directory){
 
-        Path directoryPath = Paths.get(filesRoot, directory); // create path until destiny directory
-        Path filePath = directoryPath.resolve(name); // create full path until file
+        String serverFilePath = publicFiles +"/"+ userUploaded;
+        String relativePathForUrl = String.join("/", userUploaded, directory, fileName);
+
+
+        Path directoryPath = Paths.get(serverFilePath, directory); // create path until destiny directory
+        Path fullPath = directoryPath.resolve(fileName); // create full path until file
 
         try {
 
-            Files.createDirectories(directoryPath); // create directory not exists
-            file.transferTo(filePath.toAbsolutePath().toFile()); // create file
+            Files.createDirectories(directoryPath); // create directory if doesn't exist
+            file.transferTo(fullPath.toAbsolutePath().toFile()); // create file (full path required) // TODO discover why absolute path from server does not work
 
         } catch (IOException e) {
             throw new RuntimeException("Error while saving file");
         }
 
-        return filePath.toAbsolutePath().toString(); // return file absolute path
+        return relativePathForUrl; // return file absolute path
     }
 
 }

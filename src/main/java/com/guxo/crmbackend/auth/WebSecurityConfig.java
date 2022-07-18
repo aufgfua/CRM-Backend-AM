@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("jwtSecret")
     private final String jwtSecret;
 
-    @Value("${files.root}")
+    @Value("${files.user-uploaded}")
     private String filesRoot;
 
 
@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable(); // disable cross site requests (?)
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        String filesRootAntMatcher = filesRoot.concat("/**");
+        String filesRootAntMatcher = "/" + filesRoot + "/**";
 
         http.authorizeRequests().antMatchers("/login/**").permitAll();
         http.authorizeRequests().antMatchers(filesRootAntMatcher).permitAll();
