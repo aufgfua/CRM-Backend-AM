@@ -37,6 +37,8 @@ public class CrmBackendApplication {
 			String baseUserPassword = baseAdminPassword;
 			AppUser appUserAdmin = new AppUser(0L, "Admin", "augustofalcaoflach@gmail.com", "admin", baseUserPassword, AppUserRole.ADMIN);
 			appUserService.addNewAppUser(appUserAdmin);
+			AppUser appNormalUser = new AppUser(0L, "Normal User", "aufgfua@gmail.com", "user", "1234", AppUserRole.USER);
+			appUserService.addNewAppUser(appNormalUser);
 		};
 	}
 
@@ -46,17 +48,6 @@ public class CrmBackendApplication {
 		return jwtSecret;
 	}
 
-
-
-	@Bean("permissionPaths")
-	Map<String, String[]> getPermissionPaths(){
-		Map<String, String[]> permissionPaths = new HashMap<>();
-
-		permissionPaths.put("/api/customer/**", new String[]{ AppUserRole.USER.name(), AppUserRole.ADMIN.name() });
-		permissionPaths.put("/api/user/**", new String[]{ AppUserRole.ADMIN.name() });
-
-		return permissionPaths;
-	}
 
 
 	@Bean
