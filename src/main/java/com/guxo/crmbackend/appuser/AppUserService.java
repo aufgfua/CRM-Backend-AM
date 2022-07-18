@@ -1,5 +1,6 @@
 package com.guxo.crmbackend.appuser;
 
+import com.guxo.crmbackend.customer.Customer;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,12 +13,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class AppUserService implements UserDetailsService {
+public class AppUserService{
 
     // Autowired - Config -> nullableModelMapper()
     @Qualifier("nullableModelMapper")
@@ -37,7 +39,7 @@ public class AppUserService implements UserDetailsService {
 
 
 
-    // getAppUsers :  Long  -> AppUser
+    // getAppUser :  Long  -> AppUser
     // returns appUser by ID
     public AppUser getAppUser(Long appUserId) {
         Optional<AppUser> appUser = appUserRepository.findById(appUserId); // gets appUser from id
@@ -46,6 +48,18 @@ public class AppUserService implements UserDetailsService {
         }
         return appUser.get(); // return wanted appUser
     }
+
+
+    // getAppUserByUsername :  String  -> Customer
+    // returns appUser by Email
+    public AppUser getAppUserByUsername(String appUserUsername) {
+        Optional<AppUser> appUser = appUserRepository.findByUsername(appUserUsername); // gets appUser from username
+        if (appUser.isEmpty()) {
+            return null;
+        }
+        return appUser.get();
+    }
+
 
 
 
@@ -59,7 +73,17 @@ public class AppUserService implements UserDetailsService {
         }
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword())); // encode user password
         appUserRepository.save(appUser); // create appUser
+        appUser.setPassword(null); // To avoid sending back the user password (even though encrypted)
         return appUser; // Return AppUser to the client (possibly different from given DTO)
+    }
+
+
+    // Get list of available user roles
+    public List<String> getExistingRoles(){
+        AppUserRole[] roles = AppUserRole.values();
+        String[] rolesNames = Arrays.stream(roles).map(role -> role.name()).toArray(String[]::new);
+        List<String> existingRoles = List.of(rolesNames);
+        return existingRoles;
     }
 
 
@@ -90,21 +114,5 @@ public class AppUserService implements UserDetailsService {
 
     }
 
-
-
-    // used for WebSecurityConfig - config
-    // receives String for username and returns a new SpringSecurity User -> (username, password, roles).
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<AppUser> appUserSearch = appUserRepository.findByUsername(username); // finds AppUser by username
-        if(appUserSearch.isEmpty()) {
-            throw new UsernameNotFoundException("Username not found");
-        }
-        AppUser appUser = appUserSearch.get(); // retrieves AppUser from Optional<AppUser>
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(appUser.getRole().name())); // create SimpleGrantedAuthority from AppUser.Role
-        User springSecurityUser = new User(appUser.getUsername(), appUser.getPassword(), authorities); // create SpringSecurity User (username, password, authorities)
-        return springSecurityUser;
-    }
 
 }

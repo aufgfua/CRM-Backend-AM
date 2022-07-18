@@ -26,4 +26,12 @@ public class AppUser {
 
     private AppUserRole role;
 
+
+    public AppUser(String name, String email, String username, String password, AppUserRole role) {
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 }

@@ -43,7 +43,7 @@ public class CustomerService {
     // getCustomerByEmail :  String  -> Customer
     // returns customer by Email
     public Customer getCustomerByEmail(String customerEmail) {
-        Optional<Customer> customer = customerRepository.findByEmail(customerEmail); // gets customer from id
+        Optional<Customer> customer = customerRepository.findByEmail(customerEmail); // gets customer from email
         if (customer.isEmpty()) {
             return null;
         }
