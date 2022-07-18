@@ -1,6 +1,8 @@
 package com.guxo.crmbackend.customer;
 
 
+import com.guxo.crmbackend.appuser.AppUserRepository;
+import com.guxo.crmbackend.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +21,9 @@ public class CustomerService {
 
     // Autowired - CustomerRepository
     private final CustomerRepository customerRepository;
+
+    // Autowired
+    private final AppUserService appUserService;
 
 
     // getCustomers :    -> List<Customer>
@@ -56,10 +61,25 @@ public class CustomerService {
     // addNewCustomer : Customer -> Customer
     // Creates customer in DB and then returns the customer
     public Customer addNewCustomer(Customer customer){
+        return addNewCustomer(customer, "admin"); // Return Customer to the client (possibly different from given DTO)
+    }
+
+
+
+
+    // addNewCustomer : Customer -> Customer
+    // Creates customer in DB and then returns the customer
+    public Customer addNewCustomer(Customer customer, String appUserUsername){
         boolean customerExists = customerRepository.existsById(customer.getId()); // Search for customer ID
+
         if(customerExists) { // check if customer ID was already used
             throw new IllegalStateException("Customer ID already created");
         }
+
+
+        customer.setCreationAppUser(appUserService.getAppUserByUsername(appUserUsername));
+
+
         customerRepository.save(customer); // create customer
         return customer; // Return Customer to the client (possibly different from given DTO)
     }
@@ -79,6 +99,10 @@ public class CustomerService {
 
 
     public void updateCustomer(Long customerId, Customer newCustomerValues){
+        updateCustomer(customerId, newCustomerValues, "admin");
+    }
+
+    public void updateCustomer(Long customerId, Customer newCustomerValues, String appUserUsername){
         Optional<Customer> existingCustomer = customerRepository.findById(customerId);
         if(existingCustomer.isEmpty()) { // check if there is a customer with the given ID
             throw new IllegalStateException("Customer ID does not exist");
@@ -87,6 +111,8 @@ public class CustomerService {
         Customer customer = existingCustomer.get(); // gets customer from Optional
 
         nullableModelMapper.map(newCustomerValues, customer); // map not-null values from newCustomerValues to the customer object
+
+        customer.setLastUpdateAppUser(appUserService.getAppUserByUsername(appUserUsername));
 
         customerRepository.save(customer); // save customer object with updated fields
 

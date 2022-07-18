@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -78,7 +80,10 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public Customer addNewCustomer(@RequestBody CustomerDTO customerDto){
         Customer customer = convertDtoToEntity(customerDto);
-        return customerService.addNewCustomer(customer);
+
+        String currentAppUserUsername = getCurrentAppUserUsername();
+
+        return customerService.addNewCustomer(customer, currentAppUserUsername);
     }
 
 
@@ -105,7 +110,24 @@ public class CustomerController {
         }
 
         Customer customer = convertPartialDtoToEntity(customerDto);
-        customerService.updateCustomer(customerId, customer);
+
+        String currentAppUserUsername = getCurrentAppUserUsername();
+
+        customerService.updateCustomer(customerId, customer, currentAppUserUsername);
+    }
+
+
+    // Gets current AppUser username from SecurityContext
+    private String getCurrentAppUserUsername(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return username;
     }
 
 

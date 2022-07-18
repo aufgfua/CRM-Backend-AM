@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,15 +41,30 @@ public class AppUserController {
 
     // GET /api/user/{id}
     // Get appUser by id
-    @GetMapping(path = "{customerId}")
+    @GetMapping(path = "{appUserId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public AppUser getUser(@PathVariable Long customerId) {
-        AppUser appUser = appUserService.getAppUser(customerId);
+    public AppUser getUser(@PathVariable Long appUserId) {
+        AppUser appUser = appUserService.getAppUser(appUserId);
         if(appUser == null){
             throw new AppUserNotFoundException();
         }
         return appUser;
     }
+
+
+    // GET /api/user/getByUsername/{appUserUsername}
+    // Get appUser by username
+    @GetMapping(path = "getByUsername/{appUserUsername}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public AppUser getUserByUsername(@PathVariable String appUserUsername) {
+        AppUser appUser = appUserService.getAppUserByUsername(appUserUsername);
+        if(appUser == null){
+            throw new AppUserNotFoundException();
+        }
+        return appUser;
+    }
+
+
 
 
 
@@ -87,6 +103,17 @@ public class AppUserController {
         AppUser appUser = convertPartialDtoToEntity(appUserDto);
         appUserService.updateAppUser(appUserId, appUser);
     }
+
+
+
+
+    // Get list of available user roles
+    // GET /api/user/roles
+    @GetMapping("/roles")
+    public List<String> getExistingRoles(){
+        return appUserService.getExistingRoles();
+    }
+
 
 
     // Receives DTO and convert to Entity - skips null fields

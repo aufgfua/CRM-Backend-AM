@@ -1,13 +1,13 @@
 package com.guxo.crmbackend.customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.guxo.crmbackend.appuser.AppUser;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -39,12 +39,26 @@ public class Customer {
 
     private String note;
 
-    public Customer(Long id, String name, String surname) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private AppUser creationAppUser;
+
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private AppUser lastUpdateAppUser;
+
+    public String getCreationUser() {
+        if(creationAppUser == null) {
+            return "empty";
+        }
+        return creationAppUser.getUsername();
     }
 
 
-
+    public String getLastUpdateUser() {
+        if(lastUpdateAppUser == null) {
+            return "empty";
+        }
+        return lastUpdateAppUser.getUsername();
+    }
 }

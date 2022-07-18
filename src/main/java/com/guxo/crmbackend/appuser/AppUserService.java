@@ -73,7 +73,6 @@ public class AppUserService{
         }
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword())); // encode user password
         appUserRepository.save(appUser); // create appUser
-        appUser.setPassword(null); // To avoid sending back the user password (even though encrypted)
         return appUser; // Return AppUser to the client (possibly different from given DTO)
     }
 

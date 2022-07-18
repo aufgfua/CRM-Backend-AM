@@ -35,7 +35,7 @@ public class CrmBackendApplication {
 	CommandLineRunner run(AppUserService appUserService) {
 		return args -> {
 			String baseUserPassword = baseAdminPassword;
-			AppUser appUserAdmin = new AppUser(0L, "Admin", "augustofalcaoflach@gmail.com", "admin", baseUserPassword, AppUserRole.ADMIN);
+			AppUser appUserAdmin = new AppUser(0L, "admin", "augustofalcaoflach@gmail.com", "admin", baseUserPassword, AppUserRole.ADMIN);
 			appUserService.addNewAppUser(appUserAdmin);
 			AppUser appNormalUser = new AppUser(0L, "Normal User", "aufgfua@gmail.com", "user", "1234", AppUserRole.USER);
 			appUserService.addNewAppUser(appNormalUser);
