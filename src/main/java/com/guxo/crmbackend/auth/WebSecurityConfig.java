@@ -40,8 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private String filesRoot;
 
 
-    public static final Integer ACCESS_TOKEN_DURATION = 50; // minutes
-    public static final Integer REFRESH_TOKEN_DURATION = 30; // days
+    public static final Integer ACCESS_TOKEN_DURATION = 10; // minutes
+    public static final Integer REFRESH_TOKEN_DURATION = 15; // days
 
 
 
