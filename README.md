@@ -73,14 +73,15 @@ Download Git Bash and run the commands above.
 
 ## ☕ Using the CRM API
 
-> All the API paths, methods and expected inputs can be visually seen from `http://localhost:8080/swagger-ui/index.html`
+> All the API paths, methods, and expected inputs can be visually seen from `http://localhost:8080/swagger-ui/index.html`.
 > A JSON with the paths is also available through `http://localhost:8080/api-docs/`
 
 
 Notes:
 ```
-Login currently need to be done manually from another source (postman, curl, etc...). OpenAPI does not support JWT login, only authentication
-As it is a requisite, User CRUD is only accessible by Admin users.
+Login currently needs to be done manually from another source (postman, curl, etc...). 
+OpenAPI does not support JWT login, only authentication
+As a requisite, User CRUD is only accessible by Admin users.
 All CRM api functionalities are accessible through the path /api/_
 ```
 
