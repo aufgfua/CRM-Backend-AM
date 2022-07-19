@@ -158,4 +158,3 @@ Anyone can use any piece of code created by Augusto Flach for this project.
 No need to ask.
 But I'll be happy to know if someone does so!
 
-[⬆ Back to the top ](#CRM Backend - T.A.M.)<br>
