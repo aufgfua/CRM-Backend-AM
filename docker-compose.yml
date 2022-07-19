@@ -1,0 +1,33 @@
+version: '2.2'
+
+
+services:
+  api:
+    image: 'crm-api:latest'
+    build:
+      context: .
+    container_name: api
+    ports:
+      - 127.0.0.1:8080:8080
+    depends_on:
+      - db
+    env_file: .env
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/crm
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - JWT_ENCRYPTION_SECRET=${JWT_SECRET}
+      - BASE_ADMIN_PASSWORD=${BASE_ADMIN_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=crm
+    
+

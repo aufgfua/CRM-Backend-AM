@@ -3,8 +3,16 @@
 files/*
 /public/*
 
-# Remove local variables such as DB access
-application-local.properties
+# Remove .env.dev and .env.prod with real values variables
+.env.dev
+.env.prod
+
+# remove the volume mounted with docker
+/postgres-data/*
+
+
+# Remove local variables for 'local' spring profile
+#application-local.properties
 
 
 ### Java ###
