@@ -6,7 +6,7 @@
 > The project is a REST API to manage a CRM Customer Data
 ### Base requirements
 
-All the following base requirements were met:
+These were the base requirements for the API:
 
 - [x] API only accessible after authentication
 - [x] Customer CRUD - Accessible by Regular and Admin users
@@ -40,6 +40,12 @@ Before starting, make sure you've met the following requirements:
 * You have `docker-component` installed
 * You have read the `getting started` guide.
 
+On Ubuntu:
+```
+sudo apt update
+sudo apt install docker docker-compose
+```
+
 ## 🚀 Getting Started
 
 To install the CRM API and get it running, follow these steps:
@@ -48,7 +54,7 @@ Linux (and MacOS?):
 
 Clone the repo (or download the .ZIP file and extract it):
 ```
-git clone https://github.com/aufgfua/CRM-Backend-AM main
+git clone https://github.com/aufgfua/CRM-Backend-AM
 ```
 
 Enter the project folder:
@@ -63,7 +69,7 @@ docker build -t crm-api .
 
 Run the project:
 ```
-docker-component up
+docker-compose up
 ```
 
 Windows:
