@@ -1,7 +1,5 @@
 package com.guxo.crmbackend.auth.filter;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guxo.crmbackend.auth.WebSecurityConfig;
 import com.guxo.crmbackend.auth.token.TokenUtility;

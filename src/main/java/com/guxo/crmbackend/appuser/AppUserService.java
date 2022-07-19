@@ -1,18 +1,11 @@
 package com.guxo.crmbackend.appuser;
 
-import com.guxo.crmbackend.customer.Customer;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -71,9 +64,13 @@ public class AppUserService{
         if(appUserExists) { // check if appUser ID was already used
             throw new IllegalStateException("AppUser ID already created");
         }
+        appUserExists = appUserRepository.findByUsername(appUser.getUsername()).isPresent(); // Search for appUser ID
+        if(appUserExists) { // check if appUser ID was already used
+            throw new IllegalStateException("AppUser Username already created");
+        }
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword())); // encode user password
         appUserRepository.save(appUser); // create appUser
-        return appUser; // Return AppUser to the client (possibly different from given DTO)
+        return appUser; // Return AppUser to the client
     }
 
 

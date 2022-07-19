@@ -25,7 +25,10 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
         String path = request.getServletPath();
 
-        if(path.contains("/login") || path.contains("/token/refresh")) {
+
+        // TODO create a better mapping format to these paths
+        if(path.startsWith("/login") || path.startsWith("/token/refresh") || path.startsWith("/api-docs") || path.startsWith("/swagger")) {
+            System.out.println(path.toString());
 
             filterChain.doFilter(request, response); // skip /login requests
 

@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -60,15 +62,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean()); // Filter for authentication
         customAuthenticationFilter.setJwtSecret(jwtSecret); // set secret to generate JWT
 
-        http.csrf().disable(); // disable cross site requests (?)
+        http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
         // XSS protection - Baeldung https://www.baeldung.com/spring-prevent-xss
         http    .headers()
-                .xssProtection()
-                .and()
-                .contentSecurityPolicy("script-src 'self'");
+                .xssProtection();
+//                .and()
+//                .contentSecurityPolicy("script-src 'self'");
+
+
+        // TODO create a better mapping format to these paths
+        // TODO discover the best way of allowing these paths access - no way this is the right way
 
 
         String filesRootAntMatcher = "/" + filesRoot + "/**";
@@ -77,6 +83,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(filesRootAntMatcher).permitAll();
         http.authorizeRequests().antMatchers("/swagger-ui.html").permitAll();
         http.authorizeRequests().antMatchers("/swagger-ui/**").permitAll();
+        http.authorizeRequests().regexMatchers("^/swagger.*").permitAll();
+        http.authorizeRequests().antMatchers("/swagger-resources/**").permitAll();
         http.authorizeRequests().antMatchers("/api-docs/**").permitAll();
         http.authorizeRequests().antMatchers("/token/refresh/**").permitAll();
 
@@ -92,6 +100,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilter(customAuthenticationFilter); // add created auth filter
 
     }
+
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+        super.configure(web);
+    }
+
 
     @Bean
     @Override

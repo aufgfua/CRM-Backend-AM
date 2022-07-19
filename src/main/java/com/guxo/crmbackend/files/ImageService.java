@@ -2,7 +2,6 @@ package com.guxo.crmbackend.files;
 
 
 import com.guxo.crmbackend.customer.Customer;
-import jdk.jfr.ContentType;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

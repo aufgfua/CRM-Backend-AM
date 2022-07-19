@@ -22,6 +22,7 @@ public class AppUser {
     private String name;
     private String email;
 
+    @Column(unique=true)
     private String username;
     @JsonIgnore // avoid sending password back to the response
     private String password;

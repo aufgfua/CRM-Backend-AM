@@ -1,6 +1,5 @@
 package com.guxo.crmbackend.files;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.guxo.crmbackend.customer.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,6 @@
 package com.guxo.crmbackend.customer;
 
 
-import com.guxo.crmbackend.appuser.AppUserRepository;
 import com.guxo.crmbackend.appuser.AppUserService;
 import com.guxo.crmbackend.files.Image;
 import com.guxo.crmbackend.files.ImageService;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.channels.MulticastChannel;
 import java.util.List;
 import java.util.Optional;
 

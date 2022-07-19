@@ -1,8 +1,6 @@
 package com.guxo.crmbackend.auth.token;
 
 import com.guxo.crmbackend.appuser.AppUser;
-import com.guxo.crmbackend.appuser.AppUserRepository;
-import com.guxo.crmbackend.appuser.AppUserRole;
 import com.guxo.crmbackend.appuser.AppUserService;
 import com.guxo.crmbackend.auth.WebSecurityConfig;
 import lombok.AllArgsConstructor;
