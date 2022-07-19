@@ -1,9 +1,6 @@
  # CRM Backend - T.A.M.
 
 
-![GitHub repo size](https://img.shields.io/github/repo-size/aufgfua/CRM-Backend-AM?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/aufgfua/CRM-Backend-AM?style=for-the-badge)
-
 
 > CRM Backend created for T.A.M's recruitment proccess.
 > The project is a REST API to manage a CRM Customer Data
