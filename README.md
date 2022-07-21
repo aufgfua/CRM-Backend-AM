@@ -23,11 +23,11 @@ The project is still in development and the next updates will focus on the follo
 - [x] OpenAPI + Swagger-ui for API documentation
 - [x] Fully running on Docker
 - [x] Only "2-commands" set-up
+- [x] Generate AI Unit and Mock tests using DiffBlue
+- [ ] Write manual Unit Tests for the REST access points
 - [ ] Auto build project inside the Docker container with DevTools
 - [ ] Fix /login and /token not showing in API visual documentation (swagger-ui)
 - [ ] OAuth 2 authentication
-- [ ] Write Unit Tests for the REST access points
-- [ ] ~~Get a better computer so that DiffBlue tests generation doesn't crash my Linux~~
 - [ ] Integrate Unit Tests with H2
 - [ ] Decrease Maven's first-build time
 - [ ] Get JWT Secret and DB access from cloud services (AWS)
