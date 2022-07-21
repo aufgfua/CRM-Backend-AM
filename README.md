@@ -80,16 +80,18 @@ Download Git Bash and run the commands above.
 ## ☕ Using the CRM API
 
 > All the API paths, methods, and expected inputs can be visually seen from `http://localhost:8080/swagger-ui/index.html`.
-> A JSON with the paths is also available through `http://localhost:8080/api-docs/`
+> A JSON with all API paths is also available through `http://localhost:8080/api-docs/`
 
 
 Notes:
-```
-Login currently needs to be done manually from another source (postman, curl, etc...). 
-OpenAPI does not support JWT login, only authentication
-As a requisite, User CRUD is only accessible by Admin users.
-All CRM api functionalities are accessible through the path /api/_
-```
+
+> Login currently needs to be done manually from another source (postman, curl, etc...). 
+
+> OpenAPI does not support JWT login, only authentication
+
+> As a requisite, User CRUD is only accessible by Admin users.
+
+> All CRM api functionalities are accessible through the path /api/_
 
 To use the CRM API, you need to authenticate first.
 By default (as there is no auto registration involved), the system creates a predefined Admin user.
@@ -123,14 +125,14 @@ Authorization: "Bearer " + refresh_token
 The server will answer with the same previous format, with a new access_token (and a new refresh_token too).
 That way, the user will only be logged out after 15 days of non-use.
 
-Again, after having the token, all requests can be tested and visually understood through `http://localhost:8080/swagger-ui/index.html`
+Again, after having the token, all requests can be tested and visually understood through `http://localhost:8080/swagger-ui/index.html`.
 If preferred, a JSON with the available paths can be get through `http://localhost:8080/api-docs/`
 
 
 
 ## 📫 Contributing to the project
 
-To contribute to the CRM API project, follow these steps
+To contribute to the CRM API project, follow these steps:
 
 1. Hire me.
 
@@ -140,7 +142,7 @@ To contribute to the CRM API project, follow these steps
 
 We thank the following people who contributed to this project.
 
-* All code was created by Augusto Flach <github.com/aufgfua>
+* All code was created by Augusto Flach <github.com/aufgfua>.
 * All requisites were created by T.A.M's team, and they provided all the support needed to develop the application.
 
 For now I am referring to them by their nickname, to avoid exposing their recruitment proccess or any protected data.
