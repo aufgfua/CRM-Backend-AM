@@ -23,7 +23,7 @@ The project is still in development and the next updates will focus on the follo
 - [x] OpenAPI + Swagger-ui for API documentation
 - [x] Fully running on Docker
 - [x] Only "2-commands" set-up
-- [x] Generate AI Unit and Mock tests using DiffBlue
+- [x] (after-deadline) Generate AI Unit and Mock tests using DiffBlue
 - [ ] Write manual Unit Tests for the REST access points
 - [ ] Auto build project inside the Docker container with DevTools
 - [ ] Fix /login and /token not showing in API visual documentation (swagger-ui)
